@@ -1274,6 +1274,8 @@ class Handler(Extract, GetPages):
 
         periods = len(self.get_by_xpath('//th/text()[contains(., "Net Sales")]/../following-sibling::td/text()'))
 
+        print(periods)
+
         tempList = []
         for i in range(periods):
             period = self.get_by_xpath(
@@ -1285,8 +1287,11 @@ class Handler(Extract, GetPages):
             operating_inc = self.get_by_xpath(
                 f'//th/text()[contains(., "Operating Income (Loss)")]/../following-sibling::td[{i+1}]/text()')
 
-            assets = [self.get_by_xpath(
-                f'//th/text()[contains(., "Assets")]/../following-sibling::td[{i+1}]/text()')[0]]
+            try:
+                assets = [self.get_by_xpath(
+                    f'//th/text()[contains(., "Assets")]/../following-sibling::td[{i+1}]/text()')[0]]
+            except:
+                assets = ['no']
 
             temp = {}
             if period and net_sales and operating_inc and assets:
@@ -1295,12 +1300,15 @@ class Handler(Extract, GetPages):
                 revenue = net_sales
 
                 for p, r, prof, sh in zip(period, revenue, operating_inc, assets):
-                    tempList.append({
+                    ggg = {
                         'period': p,
                         'revenue': r+ ',000',
                         'profit': prof + ',000',
-                        'authorized_share_capital': sh + ',000',
-                    })
+                    }
+                    if sh != 'no':
+                        ggg['authorized_share_capital'] =  sh + ',000'
+                    tempList.append(ggg)
+
 
                 temp['Summary_Financial_data'] = [{
                     'source': 'Korea ListedCompanies Association (KLCA)',
