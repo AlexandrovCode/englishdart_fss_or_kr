@@ -1274,12 +1274,12 @@ class Handler(Extract, GetPages):
 
         periods = len(self.get_by_xpath('//th/text()[contains(., "Net Sales")]/../following-sibling::td/text()'))
 
-        print(periods)
-
+        # print(periods)
+        assetsy = None
         tempList = []
         for i in range(periods):
             period = self.get_by_xpath(
-                f'//th/text()[contains(., "Account")]/../following-sibling::th[{i+1}]/text()')
+                f'//div/text()[contains(., "Summarized Income Statements (In KRW, thousands)")]/../..//th/text()[contains(., "Account")]/../following-sibling::th[{i+1}]/text()')
 
             net_sales = self.get_by_xpath(
                 f'//th/text()[contains(., "Net Sales")]/../following-sibling::td[{i+1}]/text()')
@@ -1306,6 +1306,7 @@ class Handler(Extract, GetPages):
                         'profit': prof + ',000',
                     }
                     if sh != 'no':
+                        assetsy = sh + ',000'
                         ggg['authorized_share_capital'] =  sh + ',000'
                     tempList.append(ggg)
 
@@ -1317,8 +1318,13 @@ class Handler(Extract, GetPages):
                         'income_statement': tempList[0]
                     }
                 }]
+                try:
+                    temp['Summary_Financial_data'][0]['summary']['balance_sheet'] = {
+                        'authorized_share_capital': assetsy
+                    }
+                except:
+                    pass
+            break
 
-                break
-
-            # print(temp)
+        # print(temp)
         return temp
