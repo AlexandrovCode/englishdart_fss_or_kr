@@ -11,10 +11,10 @@ if __name__ == '__main__':
     # final_data = a.Execute('SAMSUNG SDS','','','')
     # final_data = a.Execute('samsung_ele', '', '', '')
 
-    # final_data = a.Execute('MDE4MjYwPz1TQU1TVU5HIFNEUw===',
-    #                         'Financial_Information','','')
-    final_data = a.Execute('MDA1OTMwPz1TQU1TVU5HIEVMRUNUUk9OSUNT',
+    final_data = a.Execute('MDE4MjYwPz1TQU1TVU5HIFNEUw===',
                             'Financial_Information','','')
+    # final_data = a.Execute('MDA1OTMwPz1TQU1TVU5HIEVMRUNUUk9OSUNT',
+    #                         'Financial_Information','','')
     print(json.dumps(final_data, indent=4))
 
     elapsed_time = time.time() - start_time
