@@ -1288,10 +1288,10 @@ class Handler(Extract, GetPages):
                 f'//th/text()[contains(., "Operating Income (Loss)")]/../following-sibling::td[{i+1}]/text()')
 
             try:
+                # assets = self.get_by_xpath(
+                #     f'//th/text()[contains(., "Assets")]/../following-sibling::td[{i+1}]/text()')
+                # if not assets:
                 assets = self.get_by_xpath(
-                    f'//th/text()[contains(., "Assets")]/../following-sibling::td[{i+1}]/text()')
-                if not assets:
-                    assets = self.get_by_xpath(
                         f'//th/text()[contains(., "Capital Stock")]/../following-sibling::td[{i + 1}]/text()')
                 assets = [assets[0]]
             except:
